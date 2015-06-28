@@ -1,0 +1,10 @@
+.installed.cfg
+.mr.developer.cfg
+__init__.py
+bin/
+develop-eggs/
+eggs/
+include/
+lib/
+lib64
+test.py

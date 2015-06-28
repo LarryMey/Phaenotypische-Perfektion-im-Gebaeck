@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+CookieBakery.egg-info/PKG-INFO
+CookieBakery.egg-info/SOURCES.txt
+CookieBakery.egg-info/dependency_links.txt
+CookieBakery.egg-info/entry_points.txt
+CookieBakery.egg-info/not-zip-safe
+CookieBakery.egg-info/top_level.txt
+cookiebakery/__init__.py
