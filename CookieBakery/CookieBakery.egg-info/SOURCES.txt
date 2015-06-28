@@ -5,5 +5,8 @@ CookieBakery.egg-info/SOURCES.txt
 CookieBakery.egg-info/dependency_links.txt
 CookieBakery.egg-info/entry_points.txt
 CookieBakery.egg-info/not-zip-safe
+CookieBakery.egg-info/requires.txt
 CookieBakery.egg-info/top_level.txt
 cookiebakery/__init__.py
+cookiebakery/cookies/__init__.py
+cookiebakery/cookies/store.py

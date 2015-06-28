@@ -5,6 +5,7 @@ version = '0.1'
 
 tests_require = [
       'pytest',
+      'mock'
 ]
 
 setup(name='CookieBakery',
@@ -24,7 +25,7 @@ Phänotypische Perfektion im Gebäck""",
       install_requires=[
           # -*- Extra requirements: -*-
       ],
-      extra_requires = {
+      extras_require = {
           'tests': tests_require,
       },
       entry_points="""
