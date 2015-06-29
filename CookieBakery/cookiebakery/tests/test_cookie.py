@@ -28,7 +28,7 @@ class TestCookie:
         assert cookie.properties[0] == 76
         assert cookie.properties[1] == 81
 
-    def test_remobination_cookie(self):
+    def test_recombination_cookie(self):
         mother_cookie = Cookie([40, 80])
         father_cookie = Cookie([60, 40])
 

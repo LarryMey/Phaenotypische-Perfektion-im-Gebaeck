@@ -23,7 +23,6 @@ def MutantCookie(parent_cookie):
     derivation_f = 6  # the lower the factor, the more derivation
     derivation_a = 100.0 / (100 ** (1.0 / derivation_f))
 
-
     mutated_properties = list()
     for prop in parent_cookie.properties:
         # get a random mutation rate, 0 -> no mutation, 100 -> huge mutation
@@ -43,7 +42,7 @@ def MutantCookie(parent_cookie):
 def RecombinationCookie(parent_cookies):
     recombinated_properties = list()
     for i in range(0, len(parent_cookies[0].properties)):
-        recombinated_properties.append((parent_cookies[0].properties[i] + parent_cookies[1].properties[i]) / 2)
+        recombinated_properties.append((parent_cookies[0].properties[i] + parent_cookies[1].properties[i]) / 2) # XXX
 
     return Cookie(recombinated_properties)
 
