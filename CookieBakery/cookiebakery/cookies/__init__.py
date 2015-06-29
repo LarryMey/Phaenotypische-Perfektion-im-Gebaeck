@@ -1,10 +1,15 @@
+from cookiebakery.graph import CookieGraph
 import random
 
 
 class Cookie:
 
-    def __init__(self, properties):
+    def __init__(self, properties=list(), parents=tuple()):
         self.properties = properties
+        self.parents = parents
+
+        graph = CookieGraph()
+        graph.add(self)
 
 
 def RandomCookie():
@@ -36,7 +41,7 @@ def MutantCookie(parent_cookie):
             # mutate to negative value
             mutated_properties.append(int(prop - (prop * mutate_rate / 100)))
 
-    return Cookie(mutated_properties)
+    return Cookie(mutated_properties, (parent_cookie,))
 
 
 def RecombinationCookie(parent_cookies):
@@ -44,5 +49,5 @@ def RecombinationCookie(parent_cookies):
     for i in range(0, len(parent_cookies[0].properties)):
         recombinated_properties.append((parent_cookies[0].properties[i] + parent_cookies[1].properties[i]) / 2) # XXX
 
-    return Cookie(recombinated_properties)
+    return Cookie(recombinated_properties, parent_cookies)
 

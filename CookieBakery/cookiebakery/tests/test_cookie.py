@@ -16,6 +16,7 @@ class TestCookie:
         cookie = RandomCookie()
         assert cookie.properties[0] == 50
         assert cookie.properties[1] == 50
+        assert cookie.parents == ()
 
     @mock.patch('random.randint')
     @mock.patch('random.choice')
@@ -27,11 +28,12 @@ class TestCookie:
         cookie = MutantCookie(parent_cookie)
         assert cookie.properties[0] == 76
         assert cookie.properties[1] == 81
+        assert cookie.parents == (parent_cookie,)
 
     def test_recombination_cookie(self):
-        mother_cookie = Cookie([40, 80])
-        father_cookie = Cookie([60, 40])
+        parent_cookies = (Cookie([40, 80]), Cookie([60, 40]))
 
-        cookie = RecombinationCookie((mother_cookie, father_cookie))
+        cookie = RecombinationCookie(parent_cookies)
         assert cookie.properties[0] == 50
         assert cookie.properties[1] == 60
+        assert cookie.parents == parent_cookies
