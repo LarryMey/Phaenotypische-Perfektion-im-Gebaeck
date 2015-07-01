@@ -1,4 +1,4 @@
-from cookiebakery.graph import CookieGraph
+from cookiebakery.graph import Graph
 import random
 
 
@@ -8,7 +8,7 @@ class Cookie:
         self.properties = properties
         self.parents = parents
 
-        graph = CookieGraph()
+        graph = Graph()
         graph.add(self)
 
 

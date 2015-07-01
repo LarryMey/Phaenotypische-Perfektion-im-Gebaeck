@@ -1,11 +1,11 @@
-from graph_tool.all import Graph
+from graph_tool.all import Graph as GT_Graph
 
-class CookieGraph:
+class Graph:
     # there is only one graph, so implement as singleton
     class __Graph__:
         
         def __init__(self):
-            self.graph = Graph()
+            self.graph = GT_Graph()
 
         def add(self, cookie):
             cookie.vertex = self.graph.add_vertex()
@@ -15,9 +15,9 @@ class CookieGraph:
     __instance__ = None
 
     def __new__(cls):
-        if not CookieGraph.__instance__:
-            CookieGraph.__instance__ = CookieGraph.__Graph__()
-        return CookieGraph.__instance__
+        if not Graph.__instance__:
+            Graph.__instance__ = Graph.__Graph__()
+        return Graph.__instance__
 
     def __getattr__(self, name):
         return getattr(self.__instance__, name)
