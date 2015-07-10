@@ -1,4 +1,6 @@
 from cookiebakery.graph import Graph
+from cookiebakery.mq import CookiePublisher
+import logging
 import random
 
 
@@ -7,18 +9,19 @@ class Cookie:
     def __init__(self, properties=list(), parents=tuple()):
         self.properties = properties
         self.parents = parents
+        self.publisher = CookiePublisher()
 
-        graph = Graph()
-        graph.add(self)
+        self.publisher.publish(self)
 
 
 def RandomCookie():
+    logging.info('creating new random cookie')
     random.seed()
-
     return Cookie([random.randint(0,100), random.randint(0,100)])
 
 
 def MutantCookie(parent_cookie):
+    logging.info('creating new mutant cookie')
     random.seed()
 
     # we use radical functions to ensure there is a higher probability for
@@ -45,6 +48,8 @@ def MutantCookie(parent_cookie):
 
 
 def RecombinationCookie(parent_cookies):
+    logging.info('creating new recombination cookie')
+
     recombinated_properties = list()
     for i in range(0, len(parent_cookies[0].properties)):
         recombinated_properties.append((parent_cookies[0].properties[i] + parent_cookies[1].properties[i]) / 2) # XXX

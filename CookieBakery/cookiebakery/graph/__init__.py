@@ -1,16 +1,29 @@
 from graph_tool.all import Graph as GT_Graph
+from cookiebakery.mq import CookieRecvr
+import logging
 
 class Graph:
     # there is only one graph, so implement as singleton
     class __Graph__:
-        
+
         def __init__(self):
             self.graph = GT_Graph()
+            self.cookies = dict()
+            self.cookierecvr = CookieRecvr(self)
+            self.cookierecvr.start()
 
-        def add(self, cookie):
-            cookie.vertex = self.graph.add_vertex()
-            for parent in cookie.parents:
-                self.graph.add_edge(parent.vertex, cookie.vertex)
+        def new_cookie(self, cookie):
+            self.cookies[cookie['cid']] = self.graph.add_vertex()
+            logging.info('added cookie {} to graph'.format(cookie['cid']))
+            for parent in cookie['parents']:
+                try:
+                    self.graph.add_edge(self.cookies[parent],
+                                        self.cookies[cookie['cid']])
+                    logging.info(
+                        'added eddge from cookie {} to graph'.format(parent))
+                except KeyError:
+                    logging.info('parent not known in graph')
+
 
     __instance__ = None
 
