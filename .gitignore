@@ -11,4 +11,5 @@ eggs/
 include/
 lib/
 lib64
+local
 test.py
