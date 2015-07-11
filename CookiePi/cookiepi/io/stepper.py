@@ -9,6 +9,8 @@ class Stepper:
     CLOCKWISE = 1
     ANTICLOCKWISE = -1
 
+    FULLCIRCLE = 4076
+
     Seq = ((1,0,0,0),
            (1,1,0,0),
            (0,1,0,0),
@@ -32,17 +34,22 @@ class Stepper:
 
 class Job(Thread):
 
-    def __init__(self, stepper, steps=4076, delay=1, direction=Stepper.CLOCKWISE):
+    def __init__(self, stepper,
+                 steps=Stepper.FULLCIRCLE,
+                 delay=1,
+                 direction=Stepper.CLOCKWISE,
+                 callback=None):
         Thread.__init__(self)
 
         self.stepper = stepper
         self.steps = steps
         self.delay = delay/1000.0
         self.direction = direction
+        self.callback = callback
 
     def run(self):
-        logging.info('rotating stepper {} by {} steps'.format(
-            self.stepper.name, self.steps))
+        logging.info('rotating stepper {} by {} steps a {}s'.format(
+            self.stepper.name, self.steps, self.delay))
 
         StepCounter = 0
 
@@ -56,4 +63,7 @@ class Job(Thread):
 
             # Wait before moving on
             time.sleep(self.delay)
+
+        if self.callback:
+            self.callback(self)
 
