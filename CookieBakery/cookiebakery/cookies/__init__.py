@@ -16,7 +16,10 @@ class Cookie:
 def RandomCookie():
     logging.info('creating new random cookie')
     random.seed()
-    return Cookie([random.randint(0,100), random.randint(0,100)])
+    return Cookie([random.randint(0,100),
+                   random.randint(0,100),
+                   random.randint(0,100),
+                   random.randint(0,100)])
 
 
 def MutantCookie(parent_cookie):

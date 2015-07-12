@@ -57,6 +57,8 @@ class Macro:
             self._fsm.reproduce()
 
     def finish(self, e=None):
+        self.right_led.off()
+        self.left_led.off()
         if self.cookie is self.evolution.ancestors[0].last():
             self.left_led.on()
         else:
@@ -64,7 +66,7 @@ class Macro:
         self._unlock()
 
     def _reproduce(self, e):
-        m = Micro(self, callback=self.finish)
+        m = Micro(self, self.cookie, callback=self.finish)
         m.start()
 
     def _unlock(self):

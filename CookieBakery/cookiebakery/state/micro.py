@@ -6,9 +6,11 @@ import logging
 
 class Micro:
 
-    def __init__(self, macro, callback=None):
+    def __init__(self, macro, cookie, callback=None):
         self.callback = callback
         self.macro = macro
+        self.cookie = cookie
+
         self._fsm = Fysom(
             initial='waiting',
             events=[('load', 'waiting', 'loaded'),
@@ -41,6 +43,8 @@ class Micro:
     def _produce_strawberry(self, e):
         logging.info('producing strawberry')
         job = StrawberryJob(self.macro.strawberry_factory,
+                            forward=self.cookie.properties[0],
+                            quantity=self.cookie.properties[1],
                             callback=self.produce_chocolate)
 
         self.macro.track.to_strawberry()
@@ -49,6 +53,8 @@ class Micro:
     def _produce_chocolate(self, e):
         logging.info('producing chocolate')
         job = ChocolateJob(self.macro.chocolate_factory,
+                           rounds=self.cookie.properties[2],
+                           velocity=self.cookie.properties[3],
                            callback=self.present)
 
         self.macro.track.to_chocolate()
