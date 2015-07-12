@@ -1,4 +1,3 @@
-from cookiebakery.graph import Graph
 from cookiebakery.mq import CookiePublisher
 import logging
 import random

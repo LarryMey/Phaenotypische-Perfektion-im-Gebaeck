@@ -6,13 +6,9 @@ import logging
 
 class Micro:
 
-    def __init__(self,
-                 track=None,
-                 strawberry_factory=None,
-                 chocolate_factory=None):
-        self.track = track
-        self.strawberry_factory = strawberry_factory
-        self.chocolate_factory = chocolate_factory
+    def __init__(self, macro, callback=None):
+        self.callback = callback
+        self.macro = macro
         self._fsm = Fysom(
             initial='waiting',
             events=[('load', 'waiting', 'loaded'),
@@ -31,27 +27,35 @@ class Micro:
     def start(self):
         self._fsm.load()
 
+    def produce_chocolate(self, job):
+        self._fsm.produce_chocolate()
+
+    def present(self, job):
+        self._fsm.present()
+
     def _load(self, e):
         logging.info('loading cookie')
-        self.track.to_load()
+        self.macro.track.to_load()
         self._fsm.produce_strawberry()
 
     def _produce_strawberry(self, e):
         logging.info('producing strawberry')
-        job = StrawberryJob(self.strawberry_factory,
-                            callback=self._fsm.produce_chocolate)
+        job = StrawberryJob(self.macro.strawberry_factory,
+                            callback=self.produce_chocolate)
 
-        self.track.to_strawberry()
+        self.macro.track.to_strawberry()
         job.start()
 
     def _produce_chocolate(self, e):
         logging.info('producing chocolate')
-        job = ChocolateJob(self.chocolate_factory,
-                           callback=self._fsm.present)
+        job = ChocolateJob(self.macro.chocolate_factory,
+                           callback=self.present)
 
-        self.track.to_chocolate()
+        self.macro.track.to_chocolate()
         job.start()
 
     def _present(self, e):
         logging.info('presenting cookie')
-        self.track.to_present()
+        self.macro.track.to_present()
+        if self.callback:
+            self.callback()
