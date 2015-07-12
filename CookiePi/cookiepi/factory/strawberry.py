@@ -18,10 +18,11 @@ class StrawberryFactory:
 
 class StrawberryJob(Thread):
 
-    def __init__(self, factory, forward=50, quantity=50):
+    def __init__(self, factory, forward=50, quantity=50, callback=None):
         Thread.__init__(self)
 
         self.factory = factory
+        self.callback = callback
 
         forward_range = factory.MAX_FORWARD_STEPS - factory.MIN_FORWARD_STEPS
         self.forward_steps = (forward * forward_range / 100) + factory.MIN_FORWARD_STEPS
@@ -53,6 +54,7 @@ class StrawberryJob(Thread):
         forward_job = Job(
             self.factory.stepper['forward'],
             steps=self.forward_steps,
-            direction=Stepper.ANTICLOCKWISE)
+            direction=Stepper.ANTICLOCKWISE,
+            callback=self.callback)
         forward_job.start()
 

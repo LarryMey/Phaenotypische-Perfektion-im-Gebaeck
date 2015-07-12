@@ -20,10 +20,11 @@ class ChocolateFactory:
 
 class ChocolateJob(Thread):
 
-    def __init__(self, factory, rounds=50, velocity=50):
+    def __init__(self, factory, rounds=50, velocity=50, callback=None):
         Thread.__init__(self)
 
         self.factory = factory
+        self.callback = callback
 
         forward_range = factory.MAX_FORWARD_DELAY - factory.MIN_FORWARD_DELAY
         self.forward_delay = ((100 - velocity) * forward_range / 100) + factory.MIN_FORWARD_DELAY
@@ -35,7 +36,8 @@ class ChocolateJob(Thread):
         logging.info('starting chocolate job')
         rotate_job = Job(
             self.factory.stepper['rotate'],
-            steps=Stepper.FULLCIRCLE * self.rounds)
+            steps=Stepper.FULLCIRCLE * self.rounds,
+            callback=self.callback)
         forward_job = Job(
             self.factory.stepper['forward'],
             delay=self.forward_delay,
