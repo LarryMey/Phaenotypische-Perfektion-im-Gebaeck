@@ -75,10 +75,6 @@ class Macro:
             self.buttons_locked = False
         self.micro_lock.release()
 
-    def _lock_buttons(self):
-        logging.debug('locking buttons')
-        self.buttons_locked = True
-
     def next_step(self, cookie, new_cookie=None):
         self.pending_cookies.put(cookie)
         if new_cookie:
@@ -87,7 +83,8 @@ class Macro:
     def button_pressed(self, pin):
         if self.buttons_locked:
             return
-        self._lock_buttons()
+        self.buttons_locked = True
+        logging.debug('locking buttons')
         logging.info('button {} pressed'.format(pin))
 
         if pin == self.left_button.pin:
