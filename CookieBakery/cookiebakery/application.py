@@ -36,7 +36,7 @@ def run_visualization():
 
         if count % 60 == 0:
             logging.debug('fit to window')
-            win.graph.fit_to_window(ink=False)
+            win.graph.fit_to_window(ink=True)
         count += 1
 
         pos = arf_layout(pos.get_graph(), pos=pos, max_iter=1)
@@ -45,12 +45,18 @@ def run_visualization():
         return True
 
     while graph.num_vertices() < 2:
-        time.sleep(4)
-        logging.info("waiting for cookies")
+        graph.add_vertex()
 
     pos = arf_layout(graph, max_iter=0)
-    win = GraphWindow(pos.get_graph(), pos, geometry=(500, 400))
+    win = GraphWindow(
+        pos.get_graph(), pos,
+        geometry=(500, 400),
+        edge_color=(0,6, 0,6, 0,6, 0,6),
+        bg_color=(0,0,0,255),
+        vertex_text=graph.vertex_index,
+        vertex_font_size=48)
     win.connect("delete-event", Gtk.main_quit)
+    win.fullscreen()
     GObject.timeout_add(100, update_state)
     win.show_all()
     Gtk.main()

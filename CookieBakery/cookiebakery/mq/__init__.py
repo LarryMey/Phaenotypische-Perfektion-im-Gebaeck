@@ -43,9 +43,9 @@ class CookieRecvr(Thread):
 
         context = zmq.Context()
         self.subscriber = context.socket(zmq.SUB)
-        self.subscriber.connect("tcp://127.0.0.1:9000")
+        self.subscriber.connect("tcp://212.122.58.29:9000")
         self.subscriber.setsockopt_string(zmq.SUBSCRIBE, '')
-        self.subscriber.setsockopt(zmq.RCVTIMEO, 120000)
+#        self.subscriber.setsockopt(zmq.RCVTIMEO, 120000)
 
     def run(self):
         logging.debug('starting cookie subscription')
