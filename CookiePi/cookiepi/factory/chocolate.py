@@ -45,6 +45,7 @@ class ChocolateJob(Thread):
         down_job = Job(
             self.factory.stepper['down'],
             delay=ChocolateFactory.DOWN_DELAY,
+            direction=Stepper.ANTICLOCKWISE,
             steps=(Stepper.FULLCIRCLE * self.rounds) / ChocolateFactory.DOWN_DELAY)
 
         rotate_job.start()

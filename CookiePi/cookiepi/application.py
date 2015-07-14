@@ -16,13 +16,15 @@ def run_production():
     track1 = Out(24)
     track2 = Out(26)
 
-    down = Stepper('down', (31,33,35,37))
+    sdown = Stepper('down', (31, 33, 35, 37))
+    sforward = Stepper('forward', (7, 11, 13, 15))
+    cdown = Stepper('down', (8, 10, 12, 16))
+    cforward = Stepper('forward', (19, 21, 23, 29))
     rotate = Stepper('rotate', (32, 36, 38, 40))
-    forward = Stepper('forward', (7, 11, 13, 15))
 
     track = Track(track1, track2)
-    sfactory = StrawberryFactory(down, forward, rotate)
-    cfactory = ChocolateFactory(down, forward, rotate)
+    sfactory = StrawberryFactory(sdown, sforward, rotate)
+    cfactory = ChocolateFactory(cdown, cforward, rotate)
 
     left_button = Button(3)
     left_led = Out(22)

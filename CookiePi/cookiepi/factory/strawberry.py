@@ -45,6 +45,7 @@ class StrawberryJob(Thread):
         down_job = Job(
             self.factory.stepper['down'],
             steps = Stepper.FULLCIRCLE / self.quantity_delay,
+            direction=Stepper.ANTICLOCKWISE,
             delay=self.quantity_delay)
         rotate_job = Job(self.factory.stepper['rotate'], callback=self.step3)
         down_job.start()
